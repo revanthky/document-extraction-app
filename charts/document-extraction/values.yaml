@@ -5,6 +5,12 @@ image:
   tag: ""
   pullPolicy: IfNotPresent
 
+# ghcr.io/revanthky/document-extraction is a private package -- a pull secret is required.
+# Create one (see README's "Running as a DKubeX app" section), then reference it by name:
+#   imagePullSecrets:
+#     - name: ghcr-pull-secret
+imagePullSecrets: []
+
 service:
   type: ClusterIP
   port: 8080

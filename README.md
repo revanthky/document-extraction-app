@@ -185,15 +185,33 @@ the app code is identical either way (`backend/app/main.py` wraps itself in a St
   starts the backend directly on the workspace-allocated port; see `run.sh`.
 - **Platform app** (`charts/document-extraction/`, `Dockerfile`) — an installable Helm chart
   for the DKubeX catalog, with `postgres` and `minio` auto-provisioned as dependencies and an
-  app-owned PVC for the Settings JSON file. Build the image from the repo root
-  (`docker build -t <registry>/document-extraction:<tag> .`) — the frontend's base path is
-  baked in at image-build time via the `DKUBEX_BASE_PATH` build arg (default
+  app-owned PVC for the Settings JSON file. The image is built from the repo root
+  (`docker build -t ghcr.io/revanthky/document-extraction:<tag> .`) — the frontend's base
+  path is baked in at image-build time via the `DKUBEX_BASE_PATH` build arg (default
   `/document-extraction`, matching the chart's release name; if you rename the chart, rebuild
   the image with a matching build arg). Validate the chart with
   `python3 <package-app-skill>/scripts/validate_chart.py charts/document-extraction`.
-  Publishing the image to a real registry and the chart to `dkubeio/helm-charts` (or your own
-  chart repo) is a deployment step outside this repo's scope — `image.repository`/`tag` in
-  `charts/document-extraction/values.yaml` are placeholders to update once you have one.
+  The packaged chart is also published as a Helm repo on the `helm-repo` branch:
+  `helm repo add document-extraction https://raw.githubusercontent.com/revanthky/document-extraction-app/helm-repo/`.
+
+  `ghcr.io/revanthky/document-extraction` is a **private** package, so pulling it needs an
+  `imagePullSecret`:
+
+  ```bash
+  kubectl create secret docker-registry ghcr-pull-secret \
+    --docker-server=ghcr.io \
+    --docker-username=revanthky \
+    --docker-password="$(gh auth token)" \
+    --namespace=<target-namespace>
+  ```
+
+  (the token needs `read:packages`; a fine-grained PAT scoped to just that is preferable to a
+  personal `gh auth token` for anything beyond one-off testing), then reference it at install:
+
+  ```bash
+  helm install document-extraction charts/document-extraction \
+    --set imagePullSecrets[0].name=ghcr-pull-secret
+  ```
 
 ## Troubleshooting
 
