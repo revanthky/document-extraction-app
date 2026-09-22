@@ -2,18 +2,18 @@ apiVersion: v2
 name: document-extraction
 description: Extract user-defined fields from PDF documents with a configurable Vision Model
 type: application
-version: 0.1.0
+version: 0.1.1
 appVersion: "1.0.0"
-icon: "https://raw.githubusercontent.com/dkubeio/document-extraction/main/assets/icon.svg"
+icon: "https://raw.githubusercontent.com/revanthky/document-extraction-app/main/charts/document-extraction/assets/icon.svg"
 
 annotations:
   dkubex: |
     url: "/document-extraction"
     displayName: Document Extraction
-    icon: "https://raw.githubusercontent.com/dkubeio/document-extraction/main/assets/icon.svg"
-    docs: "https://dkubeio.github.io/docs-site/components/document-extraction/"
+    icon: "https://raw.githubusercontent.com/revanthky/document-extraction-app/main/charts/document-extraction/assets/icon.svg"
+    docs: "https://github.com/revanthky/document-extraction-app#readme"
     images:
-      - "https://raw.githubusercontent.com/dkubeio/document-extraction/main/assets/screenshot-1.png"
+      - "https://raw.githubusercontent.com/revanthky/document-extraction-app/main/charts/document-extraction/assets/icon.svg"
     description: "Extract user-defined fields from PDF documents using a configurable Vision/Multimodal LLM, with PostgreSQL + MinIO persistence."
     categories:
       - "AI / ML"
