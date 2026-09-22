@@ -1,0 +1,36 @@
+apiVersion: v2
+name: document-extraction
+description: Extract user-defined fields from PDF documents with a configurable Vision Model
+type: application
+version: 0.1.0
+appVersion: "1.0.0"
+icon: "https://raw.githubusercontent.com/dkubeio/document-extraction/main/assets/icon.svg"
+
+annotations:
+  dkubex: |
+    url: "/document-extraction"
+    displayName: Document Extraction
+    icon: "https://raw.githubusercontent.com/dkubeio/document-extraction/main/assets/icon.svg"
+    docs: "https://dkubeio.github.io/docs-site/components/document-extraction/"
+    images:
+      - "https://raw.githubusercontent.com/dkubeio/document-extraction/main/assets/screenshot-1.png"
+    description: "Extract user-defined fields from PDF documents using a configurable Vision/Multimodal LLM, with PostgreSQL + MinIO persistence."
+    categories:
+      - "AI / ML"
+      - "Developer Tools"
+    roles:
+      - "admin"
+      - "user"
+    resources:
+      cpu:
+        min: "250m"
+        recommended: "500m"
+      memory:
+        min: "512Mi"
+        recommended: "1Gi"
+    dependencies:
+      - postgres
+      - minio
+    routing:
+      type: basepath
+    timeout: "10m"

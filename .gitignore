@@ -1,0 +1,19 @@
+backend/.venv/
+backend/.env
+backend/.data/
+backend/__pycache__/
+backend/**/__pycache__/
+backend/.pytest_cache/
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/htmlcov/
+
+frontend/node_modules/
+frontend/dist/
+
+# Written/rewritten by `d3x app create` and on every workspace boot — workspace-specific
+# port/base-path allocation, not something to commit.
+.dkubex-app.env
+
+*.pyc
+.DS_Store

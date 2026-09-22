@@ -1,0 +1,71 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "document-extraction.fullname" . }}
+  namespace: {{ .Release.Namespace }}
+  labels: {{- include "document-extraction.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels: {{- include "document-extraction.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      labels: {{- include "document-extraction.selectorLabels" . | nindent 8 }}
+    spec:
+      containers:
+        - name: app
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.service.port }}
+          env:
+            # DKubeX serves base-path apps under /<app-name>; the frontend bundle already has
+            # this path baked in at image build time (see Dockerfile), so this MUST match --
+            # only safe to leave unset if nameOverride is never used.
+            - name: DKUBEX_BASE_PATH
+              value: "/{{ include "document-extraction.name" . }}"
+            - name: APP_ENV
+              value: "production"
+            - name: LOG_LEVEL
+              value: {{ .Values.env.logLevel | quote }}
+            - name: MAX_PDF_SIZE_MB
+              value: {{ .Values.env.maxPdfSizeMb | quote }}
+            - name: PDF_RENDER_DPI
+              value: {{ .Values.env.pdfRenderDpi | quote }}
+            - name: SETTINGS_FILE
+              value: "{{ .Values.storage.mountPath }}/model_settings.json"
+            {{- if .Values.postgres }}
+            - name: DATABASE_URL
+              value: {{ .Values.postgres.db_url | quote }}
+            {{- end }}
+            {{- if .Values.minio }}
+            - name: MINIO_ENDPOINT
+              value: {{ .Values.minio.endpoint | quote }}
+            - name: MINIO_ACCESS_KEY
+              value: {{ .Values.minio.access_key | quote }}
+            - name: MINIO_SECRET_KEY
+              value: {{ .Values.minio.secret_key | quote }}
+            - name: MINIO_BUCKET_DOCUMENTS
+              value: {{ .Values.minio.bucket | quote }}
+            {{- end }}
+          volumeMounts:
+            - name: data
+              mountPath: {{ .Values.storage.mountPath }}
+          readinessProbe:
+            httpGet:
+              path: "/{{ include "document-extraction.name" . }}/api/health"
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: "/{{ include "document-extraction.name" . }}/api/health"
+              port: http
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          resources: {{- toYaml .Values.resources | nindent 12 }}
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ include "document-extraction.fullname" . }}

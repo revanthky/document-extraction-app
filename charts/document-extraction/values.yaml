@@ -1,0 +1,42 @@
+replicaCount: 1
+
+image:
+  repository: ghcr.io/dkubeio/document-extraction
+  tag: ""
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 8080
+
+# Hostname for the HTTPRoute. "*" or empty means match any host.
+hostname: "*"
+
+resources:
+  requests:
+    cpu: 250m
+    memory: 512Mi
+  limits:
+    cpu: "1"
+    memory: 1Gi
+
+# Injected by DKubeX at install time (dkubex.dependencies: [postgres, minio] in Chart.yaml).
+postgres:
+  db_url: ""
+minio:
+  endpoint: ""
+  access_key: ""
+  secret_key: ""
+  bucket: ""
+
+# Vision Model settings (Settings page) persist to a small JSON file so they survive pod
+# restarts -- an app-owned PVC, not user data, so `storageClass` (never `userPvcName`).
+storage:
+  storageClass: ""
+  size: 1Gi
+  mountPath: /data
+
+env:
+  maxPdfSizeMb: 25
+  pdfRenderDpi: 150
+  logLevel: INFO
