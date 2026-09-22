@@ -9,7 +9,7 @@ the `main` branch for the actual application and chart source
 
 ```bash
 helm repo add document-extraction \
-  https://raw.githubusercontent.com/revanthky/document-extraction-app/gh-pages/
+  https://raw.githubusercontent.com/revanthky/document-extraction-app/helm-repo/
 helm repo update
 helm install document-extraction document-extraction/document-extraction
 ```
@@ -23,7 +23,7 @@ From a fresh checkout of this branch, after a new chart version is cut on `main`
 
 ```bash
 helm package ../main-checkout/charts/document-extraction -d .
-helm repo index . --url https://raw.githubusercontent.com/revanthky/document-extraction-app/gh-pages/
+helm repo index . --url https://raw.githubusercontent.com/revanthky/document-extraction-app/helm-repo/
 git add . && git commit -m "Add document-extraction <version>" && git push
 ```
 

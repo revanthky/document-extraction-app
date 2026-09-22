@@ -31,7 +31,7 @@ entries:
         timeout: "10m"
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-09-22T03:01:46.063400705Z"
+    created: "2026-09-22T03:07:11.899317282Z"
     description: Extract user-defined fields from PDF documents with a configurable
       Vision Model
     digest: d70bdb600a9431761b8773cb1ea1857cd08b89cf05dd4f317b2d5742a290b95a
@@ -39,7 +39,7 @@ entries:
     name: document-extraction
     type: application
     urls:
-    - https://raw.githubusercontent.com/revanthky/document-extraction-app/gh-pages/document-extraction-0.1.1.tgz
+    - https://raw.githubusercontent.com/revanthky/document-extraction-app/helm-repo/document-extraction-0.1.1.tgz
     version: 0.1.1
   - annotations:
       dkubex: |
@@ -71,7 +71,7 @@ entries:
         timeout: "10m"
     apiVersion: v2
     appVersion: 1.0.0
-    created: "2026-09-22T03:01:46.062699302Z"
+    created: "2026-09-22T03:07:11.898608832Z"
     description: Extract user-defined fields from PDF documents with a configurable
       Vision Model
     digest: ae2826d37b5bfe0745d6c9cb2b4b0c76bf7f2ba2eeb7ba48423595fd0b1281e5
@@ -79,6 +79,6 @@ entries:
     name: document-extraction
     type: application
     urls:
-    - https://raw.githubusercontent.com/revanthky/document-extraction-app/gh-pages/document-extraction-0.1.0.tgz
+    - https://raw.githubusercontent.com/revanthky/document-extraction-app/helm-repo/document-extraction-0.1.0.tgz
     version: 0.1.0
-generated: "2026-09-22T03:01:46.061744392Z"
+generated: "2026-09-22T03:07:11.897615911Z"
