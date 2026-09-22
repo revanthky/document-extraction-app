@@ -2,7 +2,7 @@ apiVersion: v2
 name: document-extraction
 description: Extract user-defined fields from PDF documents with a configurable Vision Model
 type: application
-version: 0.1.1
+version: 0.1.2
 appVersion: "1.0.0"
 icon: "https://raw.githubusercontent.com/revanthky/document-extraction-app/main/charts/document-extraction/assets/icon.svg"
 
